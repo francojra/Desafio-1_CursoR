@@ -104,3 +104,27 @@ top3_genero <- generos %>%
   group_by(ator_atriz, genero3) %>%
   summarise(Frequencia3 = n())
 view(top3_genero)
+
+#### primeiro_registro: ano do primeiro filme que o(a) ator/atriz participou
+
+prim_reg <- base %>% 
+  pivot_longer(
+    cols = starts_with("ator"), 
+    names_to = "protagonismo",
+    values_to = "ator_atriz"
+  ) %>% 
+  select(ator_atriz, ano, titulo) %>%
+  arrange(ator_atriz, ano, titulo)
+view(prim_reg)
+
+#### ultimo_registro: ano do último filme que o(a) ator/atriz particiou
+
+ult_reg <- base %>% 
+  pivot_longer(
+    cols = starts_with("ator"), 
+    names_to = "protagonismo",
+    values_to = "ator_atriz"
+  ) %>% 
+  select(ator_atriz, ano, titulo) %>%
+  arrange(ator_atriz, ano, titulo)
+view(ult_reg)
