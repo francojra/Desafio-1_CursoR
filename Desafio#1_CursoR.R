@@ -160,3 +160,12 @@ view(filmes)
 
 #### contracenou: um vetor com os nomes de todos os(as) atores/atrizes que o(a) ator/atriz já 
 #### contracenou (ou seja, participou do mesmo filme)
+
+contracenou <- base %>% 
+  pivot_longer(
+    cols = starts_with("ator"), 
+    names_to = "protagonismo",
+    values_to = "ator_atriz") %>% 
+  select(ator_atriz, titulo) %>%
+  arrange(titulo)
+view(contracenou)
