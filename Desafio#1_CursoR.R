@@ -85,9 +85,22 @@ levels(generos$genero3)
 
 top1_genero <- generos %>%
   select(ator_atriz, genero1) %>%
-  filter(genero1 %in% c("Action", "Adventure", "Animation", "Biography", "Comedy",  "Crime", 
-"Documentary", "Drama","Family" , "Fantasy", "Film-Noir", "Game-Show", "History", "Horror",     
-"Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller" , "Western")) %>%
   group_by(ator_atriz, genero1) %>%
-  summarise(numero = n())
+  summarise(Frequencia1 = n())
 view(top1_genero)
+
+#### top2_genero: segundo gênero mais frequente entre os filmes que o(a) ator/atriz participou
+
+top2_genero <- generos %>%
+  select(ator_atriz, genero2) %>%
+  group_by(ator_atriz, genero2) %>%
+  summarise(Frequencia2 = n())
+view(top2_genero)
+
+#### top3_genero: terceiro gênero mais frequente entre os filmes que o(a) ator/atriz particiou
+
+top3_genero <- generos %>%
+  select(ator_atriz, genero3) %>%
+  group_by(ator_atriz, genero3) %>%
+  summarise(Frequencia3 = n())
+view(top3_genero)
