@@ -28,8 +28,8 @@ base %>%
     names_to = "protagonismo",
     values_to = "ator_atriz"
   ) %>% 
-  select(ator_atriz) %>% 
-  head(6)
+  select(ator_atriz) %>%
+  arrange(ator_atriz)
 
 #### nota_media_imdb: nota imdb média dos filmes que o(a) ator/atriz participou
 
@@ -41,7 +41,8 @@ base %>%
   ) %>% 
   select(ator_atriz, nota_imdb) %>%
   group_by(ator_atriz) %>%
-  summarise(nota_media_imdb = mean(nota_imdb, na.rm = TRUE))
+  summarise(nota_media_imdb = mean(nota_imdb, na.rm = TRUE)) %>%
+  arrange(ator_atriz, nota_media_imdb)
 
 
 #### media_lucro: lucro médio dos filmes que o(a) ator/atriz participou
@@ -52,11 +53,11 @@ base %>%
     names_to = "protagonismo",
     values_to = "ator_atriz"
   ) %>% 
-  select(ator_atriz, nota_imdb, receita, orcamento) %>%
+  select(ator_atriz, receita, orcamento) %>%
   mutate(lucro = receita - orcamento) %>%
   group_by(ator_atriz) %>%
-  summarise(media_lucro = mean(lucro, na.rm = TRUE),
-            nota_media_imdb = mean(nota_imdb, na.rm = TRUE))
+  summarise(media_lucro = mean(lucro, na.rm = TRUE)) %>%
+  arrange(ator_atriz, media_lucro)
 
 #### top1_genero: gênero mais frequente entre os filmes que o(a) ator/atriz participou
 
@@ -128,3 +129,34 @@ ult_reg <- base %>%
   select(ator_atriz, ano, titulo) %>%
   arrange(ator_atriz, ano, titulo)
 view(ult_reg)
+
+#### filmes: um data frame com informações de todos os filmes que o(a) ator/atriz participou, 
+#### as colunas desse data frame devem ser as seguintes:
+
+# - título: nome do filme
+# - ano: ano do filme
+# - diretor: diretor(a) do filme
+# - duracao: duração do filme
+# - cor: cor do filme (Color ou Black and White)
+# - generos: generos do filme
+# - pais: país do filme
+# - classificacao: classificação etária do filme
+# - nota_imdb: nota imbd do filme
+# - orcamento: orcamento do filme
+# - receita: receita do filme
+# - lucro: lucro do filme
+
+filmes <- base %>% 
+  pivot_longer(
+    cols = starts_with("ator"), 
+    names_to = "protagonismo",
+    values_to = "ator_atriz") %>% 
+  select(ator_atriz, titulo, ano, diretor, duracao, cor, generos, pais, 
+         classificacao, nota_imdb, orcamento, receita) %>%
+  mutate(lucro = receita - orcamento) %>%
+  arrange(ator_atriz, titulo, ano, diretor, duracao, cor, generos, pais, 
+         classificacao, nota_imdb, orcamento, receita, lucro)
+view(filmes)
+
+#### contracenou: um vetor com os nomes de todos os(as) atores/atrizes que o(a) ator/atriz já 
+#### contracenou (ou seja, participou do mesmo filme)
