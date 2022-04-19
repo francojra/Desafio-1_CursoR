@@ -70,8 +70,24 @@ generos <- base %>%
     separate( 
     col = generos,
     into = c("genero1", "genero2", "genero3"), 
-    sep = "\\|"
-  ) 
+    sep = "\\|") 
 view(generos)
+tibble(generos)
 
-ggplo
+generos$ator_atriz <- as.factor(generos$ator_atriz)
+generos$genero1 <- as.factor(generos$genero1)
+generos$genero2 <- as.factor(generos$genero2)
+generos$genero3 <- as.factor(generos$genero3)
+
+levels(generos$genero1)
+levels(generos$genero2)
+levels(generos$genero3)
+
+top1_genero <- generos %>%
+  select(ator_atriz, genero1) %>%
+  filter(genero1 %in% c("Action", "Adventure", "Animation", "Biography", "Comedy",  "Crime", 
+"Documentary", "Drama","Family" , "Fantasy", "Film-Noir", "Game-Show", "History", "Horror",     
+"Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller" , "Western")) %>%
+  group_by(ator_atriz, genero1) %>%
+  summarise(numero = n())
+view(top1_genero)
