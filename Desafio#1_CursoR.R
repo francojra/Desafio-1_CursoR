@@ -44,7 +44,6 @@ base %>%
   summarise(nota_media_imdb = mean(nota_imdb, na.rm = TRUE)) %>%
   arrange(ator_atriz, nota_media_imdb)
 
-
 #### media_lucro: lucro médio dos filmes que o(a) ator/atriz participou
 
 base %>% 
