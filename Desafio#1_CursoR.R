@@ -57,3 +57,21 @@ base %>%
   group_by(ator_atriz) %>%
   summarise(media_lucro = mean(lucro, na.rm = TRUE),
             nota_media_imdb = mean(nota_imdb, na.rm = TRUE))
+
+#### top1_genero: gênero mais frequente entre os filmes que o(a) ator/atriz participou
+
+generos <- base %>% 
+  pivot_longer(
+    cols = starts_with("ator"), 
+    names_to = "protagonismo",
+    values_to = "ator_atriz"
+  ) %>% 
+  select(ator_atriz, generos) %>%
+    separate( 
+    col = generos,
+    into = c("genero1", "genero2", "genero3"), 
+    sep = "\\|"
+  ) 
+view(generos)
+
+ggplo
